@@ -1,6 +1,6 @@
 import { ValueService } from './value.service';
 
-fdescribe('Test Services ValueService', () => {
+describe('Test Services ValueService', () => {
   let service: ValueService;
 
   beforeEach(() => {
@@ -12,7 +12,7 @@ fdescribe('Test Services ValueService', () => {
   });
 
   describe('Test for getValue', () => {
-    it('should return "My value', () => {
+    it('should return "My value"', () => {
       expect(service.getValue()).toBe('my value');
     });
   });
