@@ -2,13 +2,27 @@ import { TestBed } from '@angular/core/testing';
 import { MasterService } from './master.service';
 import { ValueService } from './value.service';
 
-fdescribe('Test Services MasterService', () => {
+describe('Test Services MasterService', () => {
   let masterService: MasterService;
-  let valueService: ValueService;
+  let valueServiceSpy: jasmine.SpyObj<ValueService>;
 
   beforeEach(() => {
-    valueService = new ValueService();
-    masterService = new MasterService(valueService);
+    const spy = jasmine.createSpyObj('ValueService', ['getValue']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        MasterService,
+        {
+          provide: ValueService,
+          useValue: spy,
+        },
+      ],
+    });
+
+    masterService = TestBed.inject(MasterService);
+    valueServiceSpy = TestBed.inject(
+      ValueService
+    ) as jasmine.SpyObj<ValueService>;
   });
 
   it('should be created', () => {
@@ -16,7 +30,8 @@ fdescribe('Test Services MasterService', () => {
   });
 
   it('should return "My value" from the services Valueservice', () => {
-    expect(masterService.getValue()).toBe('my value');
+    valueServiceSpy.getValue.and.returnValue('Face Value');
+    expect(masterService.getValue()).toBe('Face Value');
   });
 
   it('should return "Other value" from the fake object', () => {
@@ -32,8 +47,6 @@ fdescribe('Test Services MasterService', () => {
   });
 
   it('should call to getValue since ValueServices', () => {
-    //Aqui creamos el spy
-    const valueServiceSpy = jasmine.createSpyObj('ValueService', ['getValue']);
     //Lo que esperamos que nos devuelve
     valueServiceSpy.getValue.and.returnValue('Face Value');
     masterService = new MasterService(valueServiceSpy);
@@ -42,5 +55,4 @@ fdescribe('Test Services MasterService', () => {
     expect(valueServiceSpy.getValue).toHaveBeenCalled();
     expect(valueServiceSpy.getValue).toHaveBeenCalledTimes(1);
   });
-
 });
