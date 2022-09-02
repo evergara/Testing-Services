@@ -14,7 +14,7 @@ import {
 } from '../models/product.model.mock';
 import { HttpStatusCode } from '@angular/common/http';
 
-fdescribe('ProductsService', () => {
+describe('ProductsService', () => {
   let productsService: ProductsService;
   let httpTestingController: HttpTestingController;
 
@@ -425,7 +425,7 @@ fdescribe('ProductsService', () => {
       req.flush(msgError, mockError);
       expect(req.request.method).toEqual('GET');
     });
-    
+
     it('should return right msg when code is undefined', (doneFn) => {
       //Arrage
       const productId = '4';
