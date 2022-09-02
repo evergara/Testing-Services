@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Product } from '../models/product.model';
 import { generateManyProduct } from '../models/product.model.mock';
 
-fdescribe('TokenInterceptor', () => {
+describe('TokenInterceptor', () => {
   let productsService: ProductsService;
   let httpController: HttpTestingController;
   let tokenService: TokenService;
@@ -34,6 +34,10 @@ fdescribe('TokenInterceptor', () => {
     productsService = TestBed.inject(ProductsService);
     httpController = TestBed.inject(HttpTestingController);
     tokenService = TestBed.inject(TokenService);
+  });
+
+  afterEach(() => {
+    httpController.verify();
   });
 
   it('should be created', () => {
